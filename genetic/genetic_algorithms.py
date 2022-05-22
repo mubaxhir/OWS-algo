@@ -1,4 +1,3 @@
-from __future__ import print_function  # Only needed for Python 2
 import random
 import time
 import zerorpc
@@ -26,7 +25,7 @@ class Chromosome(object):
         if cond != 1:
             self.weights = weights
         else:
-            for i in xrange(totalWeights):
+            for i in range(totalWeights):
                 self.weights.append(getRand())
         self.total_fitness = 0
         self.games = 0
@@ -54,7 +53,7 @@ class GeneticAlgorithm(object):
 
     def __init__(self):
         self.population = []
-        for i in xrange(POPULATION_SIZE):
+        for i in range(POPULATION_SIZE):
             self.population.append(Chromosome(None,1))
         self.current_chromosome = 0
         self.current_generation = 1
@@ -115,7 +114,7 @@ class GeneticAlgorithm(object):
             return ret
         #print "didn't quit"
         self.population = []
-        for i in xrange(POPULATION_SIZE):
+        for i in range(POPULATION_SIZE):
             self.population.append(Chromosome(weights[i],0))
         return ret
 
@@ -125,11 +124,11 @@ class GeneticAlgorithm(object):
         print("variables: " + str(numVars))
         print("top: " + str(len(top)))
         print("candidates: " + str(len(top)**numVars))
-        for i in xrange(len(top)**numVars):
+        for i in range(len(top)**numVars):
             tempList = []
             invert = random.randint(0,numVars)
 
-            for j in xrange(numVars):
+            for j in range(numVars):
                 w = top[(i // (len(top) ** j)) % len(top)].weights[j]
                 if j == invert and random.uniform(0,1) < 0.2:
                     w = -w
