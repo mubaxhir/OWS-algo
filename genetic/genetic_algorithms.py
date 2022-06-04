@@ -42,10 +42,10 @@ class GeneticAlgorithm(object):
         myMap['num_blocks_above_holes'] = weights[2] #110, 0.73s
         myMap['num_gaps'] = weights[3] #64, 0.26s
 
-        ###myMap['num_blocks'] = weights[0] #46, 0.26s
-        ####myMap['bumpiness'] = weights[0] # 40, 0.46s <-- no better than random
-        ####myMap['max_height'] = weights[0] #41, 0.17s <-- no better than random
-        ####myMap['completed_lines'] = weights[0] #40, 0.17s <-- no better than random
+    #     ###myMap['num_blocks'] = weights[0] #46, 0.26s
+    #     ####myMap['bumpiness'] = weights[0] # 40, 0.46s <-- no better than random
+    #     ####myMap['max_height'] = weights[0] #41, 0.17s <-- no better than random
+    #     ####myMap['completed_lines'] = weights[0] #40, 0.17s <-- no better than random
 
         t = time.time()
         ret = self.sim.simulate(myMap)
@@ -73,14 +73,14 @@ class GeneticAlgorithm(object):
         for i in population:
             for q in range(gamesPer):
                 i.games += 1
-                #i.total_fitness = self.genScore(i.weights)
-                #print i.total_fitness
+                i.total_fitness = self.genScore(i.weights)
+                print(i.total_fitness)
                 res = self.genScore(i.weights)
                 i.time += res[0]
                 i.total_fitness += res[1]
                 i.code = res[2]
-            #print i.avg_fitness()
-        #print "got scores"
+            print(i.avg_fitness())
+        print("got scores")
         top = self.getTop(population)
         for i in top:
             self.totalScore += i.avg_fitness()
@@ -96,23 +96,23 @@ class GeneticAlgorithm(object):
         weights = []
 
         #get n^k from breeding
-        #print "before breeding"
+        print("before breeding")
         breed = self.cross(top)
-        #print "after breeding"
+        print("after breeding")
         for v in breed:
             weights.append(v)
-        #print "appended crossed weights"
+        print("appended crossed weights")
 
         #randomly gen 4 more
         for v in range(POPULATION_SIZE- temp):
             weights.append(Chromosome(None, 1).weights)
-        #print "made random stuffs"
+        print("made random stuffs")
 
-        #print weights
+        print(weights)
         self.current_generation = self.current_generation + 1
         if self.current_generation == TOTAL_GENS:
             return ret
-        #print "didn't quit"
+        print("didn't quit")
         self.population = []
         for i in range(POPULATION_SIZE):
             self.population.append(Chromosome(weights[i],0))
