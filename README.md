@@ -55,7 +55,7 @@ npm install
 
 1. `cd simulation && node index.js`
 
-2. (Make sure this one is in the virtual environment `env2`) `python genetic/genetic_algorithm.py`
+2. (Make sure this one is in the virtual environment `env2`) `python genetic/genetic_algorithms.py`
 
 Genetic algorithm will run until 1000 generations by default. This can be configured in `genetic_algorithm.py`.
 

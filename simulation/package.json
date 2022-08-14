@@ -18,7 +18,7 @@
     "dimensional",
     "algorithm"
   ],
-  "author": "RU_MADBRO?",
+  "author": "mubaxhir",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/shaynair/Genetic-Tetris-Three/issues"
@@ -28,7 +28,6 @@
     "js-base64": "^2.1.9",
     "minimist": "^1.2.0",
     "three": "^0.84.0",
-    "zerorpc": "^0.9.7",
-    "zmq": "^2.15.3"
+    "zerorpc": "^0.9.7"
   }
 }

@@ -73,7 +73,7 @@ class GeneticAlgorithm(object):
         for i in population:
             for q in range(gamesPer):
                 i.games += 1
-                i.total_fitness = self.genScore(i.weights)
+                # i.total_fitness = self.genScore(i.weights)
                 print(i.total_fitness)
                 res = self.genScore(i.weights)
                 i.time += res[0]
