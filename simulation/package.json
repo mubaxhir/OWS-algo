@@ -7,10 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shaynair/Genetic-Tetris-Three.git"
-  },
   "keywords": [
     "genetic",
     "tetris",
@@ -20,14 +16,10 @@
   ],
   "author": "mubaxhir",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/shaynair/Genetic-Tetris-Three/issues"
-  },
-  "homepage": "https://github.com/shaynair/Genetic-Tetris-Three#readme",
   "dependencies": {
     "js-base64": "^2.1.9",
     "minimist": "^1.2.0",
-    "three": "^0.84.0",
+    "three": "^0.143.0",
     "zerorpc": "^0.9.7"
   }
 }

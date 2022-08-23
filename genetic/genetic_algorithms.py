@@ -1,15 +1,33 @@
 import random
 import time
 import zerorpc
-from run_simulation import Simulation
 
+import os
+import sys
+import json
 
+ENDPOINT = 3000
 totalWeights = 4
 numTop = 2
 gamesPer = 2
 temp = numTop**totalWeights
 POPULATION_SIZE = temp * 2
 TOTAL_GENS = 1000
+
+
+class Simulation():
+    def __init__(self):
+        self.client = zerorpc.Client(timeout=30000, heartbeat=None)
+        self.client.connect('tcp://127.0.0.1:' + str(ENDPOINT))
+
+    def simulate(self, heuristics=None):
+        if heuristics == None:
+            heuristics = {}
+        try:
+            return json.loads(self.client('simulate', json.dumps(heuristics)))
+        except zerorpc.exceptions.LostRemote:
+            self.__init__()
+            return self.simulate(heuristics)
 
 
 def getRand(range=1):
@@ -48,8 +66,8 @@ class GeneticAlgorithm(object):
     #     ####myMap['completed_lines'] = weights[0] #40, 0.17s <-- no better than random
 
         t = time.time()
-        ret = self.sim.simulate(myMap)
-        return (time.time() - t, ret['score'], ret['moves'])
+        result = self.sim.simulate(myMap)
+        return (time.time() - t, result['score'], result['moves']) # moves ki jaga apny boxes bhejo
 
     def __init__(self):
         self.population = []
@@ -66,7 +84,7 @@ class GeneticAlgorithm(object):
         #where the gen algorithm goes
         print("__________________\n")
         print("GEN: " + str(self.current_generation))
-        ret = str(self.current_generation) + '\n'
+        result = str(self.current_generation) + '\n'
         population = self.population
         self.totalScore = 0
         self.totalTime = 0
@@ -74,56 +92,41 @@ class GeneticAlgorithm(object):
             for q in range(gamesPer):
                 i.games += 1
                 # i.total_fitness = self.genScore(i.weights)
-                print(i.total_fitness)
                 res = self.genScore(i.weights)
                 i.time += res[0]
                 i.total_fitness += res[1]
                 i.code = res[2]
-            print(i.avg_fitness())
         print("got scores")
         top = self.getTop(population)
         for i in top:
             self.totalScore += i.avg_fitness()
             self.totalTime += i.time
-            print("replay " + str(i.avg_fitness()) + " with " + i.code)
-            print(i.weights)
-            ret += str(i.avg_fitness()) + '\n'
-            ret += i.code + '\n'
-            ret += str(i.weights) + '\n'
-        ret += str(self.totalScore / len(top)) + '\n'
+            result += str(i.avg_fitness()) + '\n'
+            result += i.code + '\n'
+            result += str(i.weights) + '\n'
+        result += str(self.totalScore / len(top)) + '\n'
         print("score: " + str(self.totalScore / len(top)))
         print("time: " + str(self.totalTime / len(top)))
         weights = []
 
         #get n^k from breeding
-        print("before breeding")
         breed = self.cross(top)
-        print("after breeding")
         for v in breed:
             weights.append(v)
-        print("appended crossed weights")
-
         #randomly gen 4 more
         for v in range(POPULATION_SIZE- temp):
             weights.append(Chromosome(None, 1).weights)
-        print("made random stuffs")
-
-        print(weights)
         self.current_generation = self.current_generation + 1
         if self.current_generation == TOTAL_GENS:
-            return ret
-        print("didn't quit")
+            return result
         self.population = []
         for i in range(POPULATION_SIZE):
             self.population.append(Chromosome(weights[i],0))
-        return ret
+        return result
 
     def cross(self, top):
         weightList = []
         numVars = len(top[0].weights)
-        print("variables: " + str(numVars))
-        print("top: " + str(len(top)))
-        print("candidates: " + str(len(top)**numVars))
         for i in range(len(top)**numVars):
             tempList = []
             invert = random.randint(0,numVars)

@@ -19,11 +19,9 @@ Node is required to run the simulation. Python 2 is required to run the genetic 
 
 ### Dependencies
 
-* [Python 2.7](https://www.python.org/downloads/) or higher (for genetic algorithm), and also python-pip
+* [Python 3.5](https://www.python.org/downloads/) or higher (for web server and for genetic algorithm), and also python-pip
 
-* [Python 3.5](https://www.python.org/downloads/) or higher (for web server), and also python3-pip
-
-* [Node 6.x](https://nodejs.org/en/download/current/) or higher (for simulation)
+* [Node 8](https://nodejs.org/en/download/current/) (for simulation)
 
 ### Setup Instructions
 
@@ -32,10 +30,7 @@ Node is required to run the simulation. Python 2 is required to run the genetic 
 * Set up Python virtual environment. **Also make sure that your working directory has no spaces in it.**
 
 ```bash
-python3 -m pip install virtualenv flask
-python3 -m virtualenv env
-python -m pip install virtualenv enum zerorpc
-python -m virtualenv env2
+python -m venv venv
 ```
 
 * Set up NPM dependencies.
@@ -47,7 +42,7 @@ npm install
 
 ## How to run
 
-**To go into a virtual environment: (Linux/Mac) `source env/bin/activate` (Windows) `env\Scripts\activate`**
+**To go into a virtual environment: (Linux/Mac) `source venv/bin/activate` (Windows) `venv\Scripts\activate`**
 
 ### Running the genetic algorithm
 
@@ -55,13 +50,13 @@ npm install
 
 1. `cd simulation && node index.js`
 
-2. (Make sure this one is in the virtual environment `env2`) `python genetic/genetic_algorithms.py`
+2. `python genetic/genetic_algorithms.py`
 
 Genetic algorithm will run until 1000 generations by default. This can be configured in `genetic_algorithm.py`.
 
 ### Running the web server
 
-1. (Make sure this one is in the virtual environment `env`) `python3 genetic/webserver.py`
+1. `python3 genetic/webserver.py`
 
 Server will be visible, by default, on [port 80 on localhost](http://localhost:80). You can compare it to our [web server](http://geneural.net) for reference.
 

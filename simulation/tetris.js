@@ -1,7 +1,7 @@
 const BOUNDS = {
-    splitX: 6,
-    splitY: 6,
-    splitZ: 20
+    splitX: 48,
+    splitY: 70,
+    splitZ: 40
 };
 
 const INIT_Z = 15;
@@ -40,6 +40,21 @@ const CUBE_SHAPES = [
         { x: 1, y: 2 }
     ]
 ];
+
+// use these boxes 
+boxes = [(97, 93, 45),
+    (97, 93, 45),
+    (93, 97, 45),
+    (97, 93, 45),
+    (93, 97, 45),
+    (93, 97, 45),
+    (59, 84, 72),
+    (53, 74, 71),
+    (70, 102, 27),
+    (44, 53, 68),
+    (73, 33, 57),
+    (49, 87, 26),
+    (32, 27, 52)]
 // --------------------------------
 
 const THREE = require('three');
@@ -64,8 +79,8 @@ let Tetris = {
             code += Math.floor(m.rotation.x / 90) + "|" + Math.floor(m.rotation.y / 90) + "|" + Math.floor(m.rotation.z / 90);
             code += ";";
         }
+        console.log(code);
         code = Base64.encodeURI(code.length > 0 ? code.substring(0, code.length - 1) : code);
-        //console.log(code);
         return code;
     },
     start: function() {
