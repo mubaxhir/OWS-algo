@@ -9,7 +9,7 @@ $(document).ready(function() {
                 },
 
                 title: {
-                    text: 'Genetic Algorithm (3D Tetris)'
+                    text: 'Genetic Algorithm (3D space optmization)'
                 },
 
                 subtitle: {
