@@ -1,7 +1,7 @@
 const BOUNDS = {
-    splitX: 6,
-    splitY: 6,
-    splitZ: 20
+    splitX: 40,
+    splitY: 40,
+    splitZ: 70
 };
 
 const INIT_Z = 15;
@@ -9,62 +9,60 @@ const INIT_Z = 15;
 const COLLISION = { NONE: 0, WALL: 1, GROUND: 2 };
 const FIELD = { EMPTY: 0, ACTIVE: 1, PETRIFIED: 2 };
 
-
-const CUBE_SHAPES = [
-    [
-        { x: 0, y: 0 },
-        { x: 1, y: 0 },
-        { x: 1, y: 1 },
-        { x: 1, y: 2 }
-    ],
-    [
-        { x: 0, y: 0 },
-        { x: 0, y: 1 },
-        { x: 0, y: 2 },
-    ],
-    [
-        { x: 0, y: 0 },
-        { x: 0, y: 1 },
-        { x: 1, y: 0 },
-        { x: 1, y: 1 }
-    ],
-    [
-        { x: 0, y: 0 },
-        { x: 0, y: 1 },
-        { x: 0, y: 2 },
-        { x: 1, y: 1 }
-    ],
-    [
-        { x: 0, y: 0 },
-        { x: 0, y: 1 },
-        { x: 1, y: 1 },
-        { x: 1, y: 2 }
-    ]
-];
+// const CUBE_SHAPES = [
+//     [
+//         { x: 0, y: 0 },
+//         { x: 1, y: 0 },
+//         { x: 1, y: 1 },
+//         { x: 1, y: 2 }
+//     ],
+//     [
+//         { x: 0, y: 0 },
+//         { x: 0, y: 1 },
+//         { x: 0, y: 2 },
+//     ],
+//     [
+//         { x: 0, y: 0 },
+//         { x: 0, y: 1 },
+//         { x: 1, y: 0 },
+//         { x: 1, y: 1 }
+//     ],
+//     [
+//         { x: 0, y: 0 },
+//         { x: 0, y: 1 },
+//         { x: 0, y: 2 },
+//         { x: 1, y: 1 }
+//     ],
+//     [
+//         { x: 0, y: 0 },
+//         { x: 0, y: 1 },
+//         { x: 1, y: 1 },
+//         { x: 1, y: 2 }
+//     ]
+// ];
 
 // use these boxes 
-// boxes = [
-//     (10, 10, 10),
-//     (17, 12, 5),
-// ]
+boxes = [(17, 13, 15),
+    (17, 23, 13)]
 
-// BOXES_SHAPES = [];
-// for (box in boxes) {
-//     box_shape = [];
-//     var x = box[0]
-//     var y = box[1]
-//     var z = box[2]
-//     for (let i = 0; i < x; i++) {
-//         for (let j = 0; j < y; j++) {
-//             for (let k = 0; k < z; k++) {
-//                 box_shape.push(
-//                     {'x':i, 'y':j, 'z':k}
-//                 );
-//             }
-//         }
-//     }
-//     BOXES_SHAPES.push(box_shape);
-// }
+CUBE_SHAPES = [];
+for (box of boxes) {
+    var x = box[0]
+    var y = box[1]
+    var z = box[2]
+    box_shape = [];
+    for (let i = 0; i < x; i++) {
+        for (let j = 0; j < y; j++){
+            for (let k = 0; k < z; k++) {
+                box_shape.push(
+                    {'x':i, 'y':j, 'z':k}
+                )
+            }
+        }
+    };
+    CUBE_SHAPES.push(box_shape);
+}
+
 
 // --------------------------------
 
@@ -78,8 +76,6 @@ let Tetris = {
         this.gameOver = false;
         this.currentPoints = 0;
         this.heuristics = heuristics;
-        console.log("Heuristics: ", JSON.parse(heuristics));
-        console.log(JSON.stringify({ score: this.start(), moves: this.generateCode() }));
         return JSON.stringify({ score: this.start(), moves: this.generateCode() });
     },
     generateCode: function() {
@@ -388,7 +384,7 @@ Tetris.Block = {
             vector.applyAxisAngle(rotateY, y);
             vector.applyAxisAngle(rotateZ, z);
             shapes.push({ x: vector.x, y: vector.y, z: vector.z });
-
+            console.log(shapes)
             Tetris.Utils.roundVector(shapes[i]);
         }
         return shapes;
